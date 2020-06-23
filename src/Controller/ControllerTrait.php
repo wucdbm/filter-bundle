@@ -51,7 +51,7 @@ trait ControllerTrait {
     }
 
     private function errorResponse(
-        $errors, string $code, array $customData = [], int $statusCode = Response::HTTP_BAD_REQUEST
+        iterable $errors, string $code, array $customData = [], int $statusCode = Response::HTTP_BAD_REQUEST
     ): JsonResponse {
         $data = [];
 
