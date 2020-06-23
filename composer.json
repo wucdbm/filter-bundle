@@ -1,0 +1,46 @@
+{
+    "name": "wucdbm/filter-bundle",
+    "type": "symfony-bundle",
+    "description": "A Bundle that takes away some of the pain developing filtered lists of things",
+    "keywords": ["wucdbm", "filter", "filter bundle", "symfony"],
+    "authors": [
+        {
+            "name": "Martin Kirilov",
+            "email": "wucdbm@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "ext-json": "*",
+        "symfony/http-foundation": "~4.4|~5.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.8",
+        "wucdbm/php-cs-fixers": "~0.2",
+        "symfony/config": "~4.4|~5.0",
+        "symfony/dependency-injection": "~4.4|~5.0",
+        "symfony/http-kernel": "~4.4|~5.0",
+        "symfony/form": "~4.4|~5.0",
+        "symfony/options-resolver": "~4.4|~5.0",
+        "symfony/validator": "~4.4|~5.0",
+        "doctrine/orm": "~2.7"
+    },
+    "suggest": {
+        "symfony/framework-bundle": "~4.4|~5.0",
+        "symfony/config": "~4.4|~5.0",
+        "symfony/dependency-injection": "~4.4|~5.0",
+        "symfony/http-kernel": "~4.4|~5.0",
+        "symfony/form": "~4.4|~5.0",
+        "symfony/options-resolver": "~4.4|~5.0",
+        "symfony/validator": "~4.4|~5.0",
+        "doctrine/orm": "~2.7"
+    },
+    "autoload": {
+        "psr-4": { "Wucdbm\\Bundle\\WucdbmFilterBundle\\": "src" }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "license": "MIT"
+}
