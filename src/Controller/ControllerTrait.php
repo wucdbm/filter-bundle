@@ -47,7 +47,7 @@ trait ControllerTrait {
     }
 
     private function formError(FormInterface $form): JsonResponse {
-        return $this->errorResponse($form->getErrors(true, true), 'ERROR_DATA_VALIDATION');
+        return $this->errorResponse($form->getErrors(true, true), 'ERROR_VALIDATION');
     }
 
     private function errorResponse(
