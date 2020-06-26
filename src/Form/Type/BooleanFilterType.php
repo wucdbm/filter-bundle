@@ -11,28 +11,32 @@
  * file that was distributed with this source code.
  */
 
-namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Filter;
+namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wucdbm\Bundle\WucdbmFilterBundle\Form\DataTransformer\NullableBooleanToStringTransformer;
 
-class DateRangeFilterType extends AbstractType {
+class BooleanFilterType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder
-            ->add($options['min_field_name'], DateFilterType::class)
-            ->add($options['max_field_name'], DateFilterType::class);
+        $builder->setData($options['data'] ?? null);
+        $builder->addViewTransformer(new NullableBooleanToStringTransformer($options['value'], $options['false_values']));
     }
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'inherit_data' => true
+            'value' => '1',
+            'empty_data' => null,
+            'compound' => false,
+            'false_values' => ['false'],
         ]);
-        $resolver->setRequired([
-            'min_field_name', 'max_field_name'
-        ]);
-        $resolver->setAllowedTypes('min_field_name', 'string');
-        $resolver->setAllowedTypes('max_field_name', 'string');
+
+        $resolver->setAllowedTypes('false_values', 'array');
+    }
+
+    public function getBlockPrefix() {
+        return 'boolean';
     }
 }

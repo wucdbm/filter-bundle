@@ -11,32 +11,32 @@
  * file that was distributed with this source code.
  */
 
-namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Filter;
+namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Wucdbm\Bundle\WucdbmFilterBundle\Form\DataTransformer\NullableBooleanToStringTransformer;
 
-class BooleanFilterType extends AbstractType {
+class DateTimeFilterType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->setData($options['data'] ?? null);
-        $builder->addViewTransformer(new NullableBooleanToStringTransformer($options['value'], $options['false_values']));
+        $transformer = new DateTimeToStringTransformer(
+            $options['input_timezone'], $options['output_timezone'], $options['format']
+        );
+        $builder->addModelTransformer($transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'value' => '1',
-            'empty_data' => null,
-            'compound' => false,
-            'false_values' => ['false'],
+            'format' => 'Y-m-d',
+            'input_timezone' => null,
+            'output_timezone' => null
         ]);
-
-        $resolver->setAllowedTypes('false_values', 'array');
     }
 
-    public function getBlockPrefix() {
-        return 'boolean';
+    public function getParent() {
+        return TextType::class;
     }
 }

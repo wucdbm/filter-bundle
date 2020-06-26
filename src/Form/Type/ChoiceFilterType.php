@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Filter;
+namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

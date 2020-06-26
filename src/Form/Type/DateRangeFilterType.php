@@ -11,32 +11,28 @@
  * file that was distributed with this source code.
  */
 
-namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Filter;
+namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateFilterType extends AbstractType {
+class DateRangeFilterType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $transformer = new DateTimeToStringTransformer(
-            $options['input_timezone'], $options['output_timezone'], $options['format']
-        );
-        $builder->addModelTransformer($transformer);
+        $builder
+            ->add($options['min_field_name'], DateFilterType::class)
+            ->add($options['max_field_name'], DateFilterType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'format' => 'Y-m-d',
-            'input_timezone' => null,
-            'output_timezone' => null
+            'inherit_data' => true
         ]);
-    }
-
-    public function getParent() {
-        return TextType::class;
+        $resolver->setRequired([
+            'min_field_name', 'max_field_name'
+        ]);
+        $resolver->setAllowedTypes('min_field_name', 'string');
+        $resolver->setAllowedTypes('max_field_name', 'string');
     }
 }

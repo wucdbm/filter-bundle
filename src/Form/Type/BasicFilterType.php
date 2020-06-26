@@ -11,14 +11,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Filter;
+namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class BaseFilterType extends AbstractType {
+class BasicFilterType extends AbstractType {
 
-    public function getParent() {
-        return BasicFilterType::class;
+    public function configureOptions(OptionsResolver $resolver) {
+        $resolver->setDefaults([
+            'method' => 'GET',
+            'csrf_protection' => false,
+            'allow_extra_fields' => true,
+        ]);
     }
 
     public function getBlockPrefix() {
