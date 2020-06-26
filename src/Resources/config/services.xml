@@ -5,7 +5,7 @@
     <services>
         <defaults autowire="true" autoconfigure="true"/>
 
-        <prototype namespace="Wucdbm\Bundle\WucdbmFilterBundle\Form\Type\" resource="../../Form">
+        <prototype namespace="Wucdbm\Bundle\WucdbmFilterBundle\Form\Type\" resource="../../Form/Type">
             <tag name="form.type"/>
         </prototype>
     </services>
