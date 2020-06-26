@@ -14,20 +14,29 @@
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Filter;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wucdbm\Bundle\WucdbmFilterBundle\Form\DataTransformer\NullableBooleanToStringTransformer;
 
 class BooleanFilterType extends AbstractType {
 
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults([
-            'false_values' => ['false', false],
-            'empty_data' => null,
-            'required' => false
-        ]);
+    public function buildForm(FormBuilderInterface $builder, array $options) {
+        $builder->setData($options['data'] ?? null);
+        $builder->addViewTransformer(new NullableBooleanToStringTransformer($options['value'], $options['false_values']));
     }
 
-    public function getParent() {
-        return CheckboxType::class;
+    public function configureOptions(OptionsResolver $resolver) {
+        $resolver->setDefaults([
+            'value' => '1',
+            'empty_data' => null,
+            'compound' => false,
+            'false_values' => ['false'],
+        ]);
+
+        $resolver->setAllowedTypes('false_values', 'array');
+    }
+
+    public function getBlockPrefix() {
+        return 'boolean';
     }
 }
