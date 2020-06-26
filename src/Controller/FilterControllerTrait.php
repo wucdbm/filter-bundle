@@ -22,7 +22,7 @@ use Wucdbm\Bundle\WucdbmFilterBundle\Controller\Exception\DecodeRequestException
 use Wucdbm\Bundle\WucdbmFilterBundle\Filter\Pagination;
 use Wucdbm\Bundle\WucdbmFilterBundle\Helper\FormHelper;
 
-trait ControllerTrait {
+trait FilterControllerTrait {
 
     private function error(
         string $message, string $code = null, int $statusCode = Response::HTTP_BAD_REQUEST
