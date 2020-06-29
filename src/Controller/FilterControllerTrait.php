@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Wucdbm\Bundle\WucdbmFilterBundle\Controller\Exception\DecodeRequestException;
+use Wucdbm\Bundle\WucdbmFilterBundle\Error\Error;
 use Wucdbm\Bundle\WucdbmFilterBundle\Filter\Pagination;
 use Wucdbm\Bundle\WucdbmFilterBundle\Helper\FormHelper;
 
@@ -59,6 +60,11 @@ trait FilterControllerTrait {
             if ($error instanceof \Throwable) {
                 $data[] = [
                     'message' => $error->getMessage()
+                ];
+            } elseif ($error instanceof Error) {
+                $data[] = [
+                    'message' => $error->getMessage(),
+                    'path' => $error->getPath()
                 ];
             } elseif ($error instanceof FormError) {
                 $data[] = [
