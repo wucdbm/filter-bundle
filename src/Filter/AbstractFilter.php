@@ -104,6 +104,12 @@ class AbstractFilter {
         return $this->_fields;
     }
 
+    public function paginate(): self {
+        $this->_paginated = true;
+
+        return $this;
+    }
+
     public function __construct() {
         $this->_pagination = new Pagination($this);
         $this->_options = new FilterOptions();
