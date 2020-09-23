@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 
 class FormHelper {
 
-    private const REGEX = '/^(data)|(data)|(\\])|(\\[)|children/';
+    private const REGEX = '/^(data\.)|(\\])|(\\[)|children|\.data$/';
 
     public static function formErrorPath(FormError $error): string {
         $cause = $error->getCause();
