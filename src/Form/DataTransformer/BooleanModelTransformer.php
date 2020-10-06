@@ -1,12 +1,22 @@
 <?php
 
+/*
+ * This file is part of the WucdbmFilterBundle package.
+ *
+ * Copyright (c) Martin Kirilov <wucdbm@gmail.com>
+ *
+ * Author Martin Kirilov <wucdbm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-class BooleanModelTransformer implements DataTransformerInterface
-{
+class BooleanModelTransformer implements DataTransformerInterface {
 
     private array $trueValues;
     private array $falseValues;
@@ -18,16 +28,14 @@ class BooleanModelTransformer implements DataTransformerInterface
         array $falseValues,
         array $nullValues,
         bool $required
-    )
-    {
+    ) {
         $this->trueValues = $trueValues;
         $this->falseValues = $falseValues;
         $this->nullValues = $nullValues;
         $this->required = $required;
     }
 
-    public function transform($value)
-    {
+    public function transform($value) {
         if (null === $value) {
             return null;
         }
@@ -39,8 +47,7 @@ class BooleanModelTransformer implements DataTransformerInterface
         return $value;
     }
 
-    public function reverseTransform($value)
-    {
+    public function reverseTransform($value) {
         if (!$this->required && in_array($value, $this->nullValues, true)) {
             return null;
         }
@@ -55,5 +62,4 @@ class BooleanModelTransformer implements DataTransformerInterface
 
         throw new TransformationFailedException('Invalid value.');
     }
-
 }

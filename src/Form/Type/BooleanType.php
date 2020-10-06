@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is part of the WucdbmFilterBundle package.
+ *
+ * Copyright (c) Martin Kirilov <wucdbm@gmail.com>
+ *
+ * Author Martin Kirilov <wucdbm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -7,11 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wucdbm\Bundle\WucdbmFilterBundle\Form\DataTransformer\BooleanModelTransformer;
 
-class BooleanType extends AbstractType
-{
+class BooleanType extends AbstractType {
 
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder->addModelTransformer(new BooleanModelTransformer(
             $options['true_values'],
             $options['false_values'],
@@ -20,8 +29,7 @@ class BooleanType extends AbstractType
         ));
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
+    public function configureOptions(OptionsResolver $resolver): void {
         $resolver->setDefaults([
             'compound' => false,
             'true_values' => [1, '1', true, 'true', 'on'],
@@ -29,5 +37,4 @@ class BooleanType extends AbstractType
             'null_values' => [null, 'null', ''],
         ]);
     }
-
 }

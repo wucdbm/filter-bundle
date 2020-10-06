@@ -14,7 +14,6 @@
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Wucdbm\Bundle\WucdbmFilterBundle\Form\Type\BasicFilterType;
 
 abstract class BaseFilterType extends AbstractType {
 
