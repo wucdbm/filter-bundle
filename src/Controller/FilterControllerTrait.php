@@ -86,12 +86,13 @@ trait FilterControllerTrait {
     }
 
     private function paginatedResponse(
-        array $data, Pagination $pagination, int $statusCode = Response::HTTP_OK
+        array $data, Pagination $pagination, int $statusCode = Response::HTTP_OK, array $extra = []
     ): JsonResponse {
         return $this->response([
             'data' => $data,
             'page' => $pagination->getPage(),
-            'pages' => $pagination->getPages()
+            'pages' => $pagination->getPages(),
+            'extra' => $extra
         ], $statusCode);
     }
 
