@@ -96,7 +96,11 @@ trait FilterControllerTrait {
         ], $statusCode);
     }
 
-    private function response(array $data, int $statusCode = Response::HTTP_OK): JsonResponse {
+    private function response(?array $data, int $statusCode = Response::HTTP_OK): JsonResponse {
+        if (null === $data) {
+            return new JsonResponse('null', 200, [], true);
+        }
+
         return new JsonResponse($data, $statusCode);
     }
 
