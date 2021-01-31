@@ -33,8 +33,12 @@ class BooleanType extends AbstractType {
         $resolver->setDefaults([
             'compound' => false,
             'true_values' => [1, '1', true, 'true', 'on'],
-            'false_values' => [0, '0', false, 'false', null, 'null', ''],
-            'null_values' => [null, 'null', ''],
+            // When a form is submitted, FALSE is converted to NULL
+            // Which means that NULL transforms to FALSE
+            // And empty string transforms to NULL
+            // See Symfony\Component\Form\Form::submit()
+            'false_values' => [0, '0', false, 'false', null, 'null'],
+            'null_values' => [''],
         ]);
     }
 }
