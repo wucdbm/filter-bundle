@@ -51,6 +51,10 @@ trait FilterControllerTrait {
         return $this->errorResponse($form->getErrors(true, true), 'ERROR_VALIDATION');
     }
 
+    private function formErrorAtPath(string $error, string $path): JsonResponse {
+        return $this->errorResponse([new Error($error, $path)], 'ERROR_VALIDATION');
+    }
+
     private function errorResponse(
         iterable $errors, string $code, array $customData = [], int $statusCode = Response::HTTP_BAD_REQUEST
     ): JsonResponse {
