@@ -38,7 +38,7 @@ class BooleanType extends AbstractType {
             // And empty string transforms to NULL
             // See Symfony\Component\Form\Form::submit()
             'false_values' => [0, '0', false, 'false', null, 'null'],
-            'null_values' => [''],
+            'null_values' => ['', null, 'null'],
         ]);
     }
 }
