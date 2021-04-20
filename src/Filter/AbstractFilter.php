@@ -20,13 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AbstractFilter {
 
-    private Pagination $_pagination;
-    private FilterOptions $_options;
-    private ?array $_fields = null;
-    private bool $_paginated = false;
+    private Pagination $pagination;
+    private FilterOptions $options;
+    private ?array $fields = null;
+    private bool $paginated = false;
 
-    public function loadRequest(Request $request, string $method = 'GET', string $namespace = '', $paginate = true): void {
-        $data = $this->getData($request, $method, $namespace);
+    public function loadRequest(Request $request, string $namespace = '', $paginate = true): void {
+        $data = $this->getData($request, $request->getMethod(), $namespace);
         $this->loadPageAndLimit($data, $paginate);
 
         foreach ($this->getFields() as $field) {
@@ -50,13 +50,13 @@ class AbstractFilter {
     }
 
     protected function loadPageAndLimit(array $data, bool $paginate): void {
-        $this->_paginated = $paginate;
+        $this->paginated = $paginate;
 
-        $page = $data[$this->_options->getPageVar()] ?? 1;
-        $this->_pagination->setPage($page);
+        $page = $data[$this->options->getPageVar()] ?? 1;
+        $this->pagination->setPage($page);
 
-        if (isset($data[$this->_options->getLimitVar()])) {
-            $this->_pagination->setLimit($data[$this->_options->getLimitVar()]);
+        if (isset($data[$this->options->getLimitVar()])) {
+            $this->pagination->setLimit($data[$this->options->getLimitVar()]);
         }
     }
 
@@ -84,54 +84,88 @@ class AbstractFilter {
     }
 
     protected function getFields(): array {
-        if (null === $this->_fields) {
+        if (null === $this->fields) {
             $reflection = new ReflectionClass($this);
             $properties = $reflection->getProperties();
 
-            $this->_fields = [];
+            $this->fields = [];
 
             foreach ($properties as $property) {
                 $field = $property->getName();
 
-                if (0 === strpos($field, '_')) {
+                if (str_starts_with($field, '_')) {
                     continue;
                 }
 
-                $this->_fields[] = $field;
+                $this->fields[] = $field;
             }
         }
 
-        return $this->_fields;
+        return $this->fields;
     }
 
-    public function paginate(): self {
-        $this->_paginated = true;
+    final public function paginate(): self {
+        $this->paginated = true;
 
         return $this;
     }
 
     public function __construct() {
-        $this->_pagination = new Pagination($this);
-        $this->_options = new FilterOptions();
+        $this->pagination = new Pagination($this);
+        $this->options = new FilterOptions();
     }
 
-    public function getPagination(): Pagination {
-        return $this->_pagination;
+    final public function getPagination(): Pagination {
+        return $this->pagination;
     }
 
-    public function getOptions(): FilterOptions {
-        return $this->_options;
+    final public function getOptions(): FilterOptions {
+        return $this->options;
     }
 
-    public function getLimit(): ?int {
-        return $this->_pagination->getLimit();
+    final public function getOption(string $name): mixed {
+        return $this->options->getOption($name);
     }
 
-    public function getPage(): ?int {
-        return $this->_pagination->getPage();
+    final public function isPaginated(): bool {
+        return $this->paginated;
     }
 
-    public function isPaginated(): bool {
-        return $this->_paginated;
+    final public function getPage(): ?int {
+        return $this->pagination->getPage();
+    }
+
+    final public function getLimit(): ?int {
+        return $this->pagination->getLimit();
+    }
+
+    final public function getResults(): int {
+        return $this->pagination->getResults();
+    }
+
+    final public function getOffset(): int {
+        return $this->pagination->getOffset();
+    }
+
+    final public function getPages(): int {
+        return $this->pagination->getPages();
+    }
+
+    final public function setPage($page): self {
+        $this->pagination->setPage($page);
+
+        return $this;
+    }
+
+    final public function setLimit($limit): self {
+        $this->pagination->setLimit($limit);
+
+        return $this;
+    }
+
+    final public function setResults(int $results): self {
+        $this->pagination->setResults($results);
+
+        return $this;
     }
 }
