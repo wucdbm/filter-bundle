@@ -13,6 +13,7 @@
 
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Controller;
 
+use JsonException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -112,16 +113,10 @@ trait FilterControllerTrait {
      * @throws DecodeRequestException
      */
     private function decode(Request $request): array {
-        $decoded = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-
-        $errorCode = json_last_error();
-
-        if (JSON_ERROR_NONE === $errorCode) {
-            return $decoded;
+        try {
+            return json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new DecodeRequestException($e->getMessage());
         }
-
-        $errorMessage = json_last_error_msg();
-
-        throw new DecodeRequestException($errorMessage);
     }
 }
