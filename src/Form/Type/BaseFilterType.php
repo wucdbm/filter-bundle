@@ -17,11 +17,11 @@ use Symfony\Component\Form\AbstractType;
 
 abstract class BaseFilterType extends AbstractType {
 
-    public function getParent() {
+    public function getParent(): ?string {
         return BasicFilterType::class;
     }
 
-    public function getBlockPrefix() {
+    public function getBlockPrefix(): string {
         return '';
     }
 }

@@ -36,7 +36,7 @@ class BooleanFilterType extends AbstractType {
         $resolver->setAllowedTypes('false_values', 'array');
     }
 
-    public function getBlockPrefix() {
+    public function getBlockPrefix(): string {
         return 'boolean';
     }
 }
