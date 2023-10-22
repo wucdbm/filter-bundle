@@ -21,14 +21,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateFilterType extends AbstractType {
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
         $transformer = new DateTimeToStringTransformer(
             $options['input_timezone'], $options['output_timezone'], $options['format']
         );
         $builder->addModelTransformer($transformer);
     }
 
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults([
             'format' => 'Y-m-d',
             'input_timezone' => null,

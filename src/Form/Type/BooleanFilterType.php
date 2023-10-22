@@ -20,12 +20,14 @@ use Wucdbm\Bundle\WucdbmFilterBundle\Form\DataTransformer\NullableBooleanToStrin
 
 class BooleanFilterType extends AbstractType {
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
         $builder->setData($options['data'] ?? null);
         $builder->addViewTransformer(new NullableBooleanToStringTransformer($options['value'], $options['false_values']));
     }
 
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults([
             'value' => '1',
             'empty_data' => null,
