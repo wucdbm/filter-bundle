@@ -18,8 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BasicFilterType extends AbstractType {
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
+    public function configureOptions(OptionsResolver $resolver): void {
         $resolver->setDefaults([
             'method' => 'GET',
             'csrf_protection' => false,

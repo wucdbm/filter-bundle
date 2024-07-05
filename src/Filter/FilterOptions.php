@@ -48,7 +48,7 @@ class FilterOptions {
     private array $options = [
         self::OPTION_HYDRATION => self::OPTION_HYDRATION_OBJECT,
         self::OPTION_PAGE_VAR => 'page',
-        self::OPTION_LIMIT_VAR => 'limit'
+        self::OPTION_LIMIT_VAR => 'limit',
     ];
 
     public function getHydrationMode() {

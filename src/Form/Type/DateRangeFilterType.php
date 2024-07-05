@@ -19,20 +19,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateRangeFilterType extends AbstractType {
 
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add($options['min_field_name'], DateFilterType::class)
             ->add($options['max_field_name'], DateFilterType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
+    public function configureOptions(OptionsResolver $resolver): void {
         $resolver->setDefaults([
-            'inherit_data' => true
+            'inherit_data' => true,
         ]);
         $resolver->setRequired([
-            'min_field_name', 'max_field_name'
+            'min_field_name', 'max_field_name',
         ]);
         $resolver->setAllowedTypes('min_field_name', 'string');
         $resolver->setAllowedTypes('max_field_name', 'string');

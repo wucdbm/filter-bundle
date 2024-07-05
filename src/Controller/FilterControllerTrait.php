@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Wucdbm\Bundle\WucdbmFilterBundle\Controller\Exception\DecodeRequestException;
 use Wucdbm\Bundle\WucdbmFilterBundle\Error\Error;
+use Wucdbm\Bundle\WucdbmFilterBundle\Error\ErrorInterface;
 use Wucdbm\Bundle\WucdbmFilterBundle\Filter\Pagination;
 use Wucdbm\Bundle\WucdbmFilterBundle\Helper\FormHelper;
 
@@ -61,33 +62,51 @@ trait FilterControllerTrait {
     ): JsonResponse {
         $data = [];
 
-        foreach ($errors as $error) {
+        foreach ($errors as $key => $error) {
             if ($error instanceof \Throwable) {
                 $data[] = [
-                    'message' => $error->getMessage()
-                ];
-            } elseif ($error instanceof Error) {
-                $data[] = [
                     'message' => $error->getMessage(),
-                    'path' => $error->getPath()
                 ];
+            } elseif ($error instanceof ErrorInterface) {
+                $err = [
+                    'message' => $error->getMessage(),
+                ];
+
+                $path = $error->getPath();
+
+                if (null !== $path) {
+                    $err['path'] = $error->getPath();
+                }
+
+                $data[] = $err;
             } elseif ($error instanceof FormError) {
                 $data[] = [
                     'message' => $error->getMessage(),
-                    'path' => FormHelper::formErrorPath($error)
+                    'path' => FormHelper::formErrorPath($error),
+                ];
+            } elseif (is_string($error)) {
+                $data[] = [
+                    'message' => $error,
+                    'path' => $key,
                 ];
             } else {
                 $data[] = [
-                    'message' => $error
+                    'message' => $error,
                 ];
             }
         }
 
-        return $this->response(array_merge($customData, [
-            'success' => false,
-            'code' => $code,
-            'errors' => $data
-        ]), $statusCode);
+        return $this->response(
+            array_merge(
+                $customData,
+                [
+                    'success' => false,
+                    'code' => $code,
+                    'errors' => $data,
+                ]
+            ),
+            $statusCode
+        );
     }
 
     private function paginatedResponse(
@@ -97,7 +116,7 @@ trait FilterControllerTrait {
             'data' => $data,
             'page' => $pagination->getPage(),
             'pages' => $pagination->getPages(),
-            'extra' => $extra
+            'extra' => $extra,
         ], $statusCode);
     }
 

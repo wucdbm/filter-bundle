@@ -13,7 +13,7 @@
 
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Error;
 
-class Error {
+class Error implements ErrorInterface {
 
     private string $message;
     private string $path;

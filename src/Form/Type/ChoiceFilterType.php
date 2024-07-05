@@ -19,10 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChoiceFilterType extends AbstractType {
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
+    public function configureOptions(OptionsResolver $resolver): void {
         $resolver->setDefaults([
-            'required' => false
+            'required' => false,
         ]);
     }
 
