@@ -23,9 +23,15 @@ class AbstractFilter {
     private Pagination $pagination;
     private FilterOptions $options;
     private ?array $fields = null;
-    private bool $paginated = false;
+    /**
+     * @deprecated
+     */
+    private bool $paginated = true;
 
-    public function loadRequest(Request $request, string $namespace = '', $paginate = true): void {
+    /**
+     * @deprecated
+     */
+    public function loadRequest(Request $request, string $namespace = '', bool $paginate = true): void {
         $data = $this->getData($request, $request->getMethod(), $namespace);
         $this->loadPageAndLimit($data, $paginate);
 
@@ -43,6 +49,9 @@ class AbstractFilter {
         }
     }
 
+    /**
+     * @deprecated
+     */
     public function loadForm(Request $request, FormInterface $form, bool $paginate = true): void {
         $data = $this->getData($request, $form->getConfig()->getMethod(), $form->getName());
         $this->loadPageAndLimit($data, $paginate);
@@ -104,6 +113,9 @@ class AbstractFilter {
         return $this->fields;
     }
 
+    /**
+     * @deprecated
+     */
     final public function paginate(): self {
         $this->paginated = true;
 
@@ -127,6 +139,9 @@ class AbstractFilter {
         return $this->options->getOption($name);
     }
 
+    /**
+     * @deprecated
+     */
     final public function isPaginated(): bool {
         return $this->paginated;
     }
