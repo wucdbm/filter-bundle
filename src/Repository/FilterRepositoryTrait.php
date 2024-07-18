@@ -20,31 +20,18 @@ use Wucdbm\Bundle\WucdbmFilterBundle\Filter\AbstractFilter;
 trait FilterRepositoryTrait {
 
     public function filterEntities(
-        QueryBuilder $builder, AbstractFilter $filter, ?string $groupBy = null
+        QueryBuilder $builder, AbstractFilter $filter
     ): array {
-        $pagination = $filter->getPagination();
-        $options = $filter->getOptions();
-
-        if ($pagination->getLimit()) {
-            $builder->setMaxResults($pagination->getLimit());
-        }
-        $builder->setFirstResult($pagination->getOffset());
-
-        if ($filter->isPaginated()) {
-            $query = $builder->getQuery();
-            $query->setHydrationMode($options->getHydrationMode());
-            $paginator = new Paginator($query, true);
-            $pagination->setResults(count($paginator));
-
-            return $paginator->getIterator()->getArrayCopy();
+        if ($filter->getLimit()) {
+            $builder->setMaxResults($filter->getLimit());
         }
 
-        if ($groupBy && $options->isHydrationArray()) {
-            $builder->groupBy($groupBy);
-        }
+        $builder->setFirstResult($filter->getOffset());
 
         $query = $builder->getQuery();
+        $paginator = new Paginator($query, true);
+        $filter->setResults(count($paginator));
 
-        return $query->getResult($options->getHydrationMode());
+        return $paginator->getIterator()->getArrayCopy();
     }
 }

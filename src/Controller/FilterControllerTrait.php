@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Wucdbm\Bundle\WucdbmFilterBundle\Controller\Exception\DecodeRequestException;
 use Wucdbm\Bundle\WucdbmFilterBundle\Error\Error;
 use Wucdbm\Bundle\WucdbmFilterBundle\Error\ErrorInterface;
-use Wucdbm\Bundle\WucdbmFilterBundle\Filter\Pagination;
+use Wucdbm\Bundle\WucdbmFilterBundle\Filter\AbstractFilter;
 use Wucdbm\Bundle\WucdbmFilterBundle\Helper\FormHelper;
 
 trait FilterControllerTrait {
@@ -110,12 +110,12 @@ trait FilterControllerTrait {
     }
 
     private function paginatedResponse(
-        array $data, Pagination $pagination, int $statusCode = Response::HTTP_OK, array $extra = []
+        array $data, AbstractFilter $filter, int $statusCode = Response::HTTP_OK, array $extra = []
     ): JsonResponse {
         return $this->response([
             'data' => $data,
-            'page' => $pagination->getPage(),
-            'pages' => $pagination->getPages(),
+            'page' => $filter->getPage(),
+            'pages' => $filter->getPages(),
             'extra' => $extra,
         ], $statusCode);
     }
