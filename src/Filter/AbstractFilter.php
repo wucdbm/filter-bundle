@@ -23,16 +23,16 @@ class AbstractFilter {
         return $this->page;
     }
 
-    final public function setPage(int $page): void {
-        $this->page = $page;
+    final public function setPage(?int $page): void {
+        $this->page = $page ?? 1;
     }
 
     final public function getLimit(): ?int {
         return $this->limit;
     }
 
-    final public function setLimit(int $limit): void {
-        $this->limit = $limit;
+    final public function setLimit(?int $limit): void {
+        $this->limit = $limit ?? 20;
     }
 
     final public function getResults(): int {
