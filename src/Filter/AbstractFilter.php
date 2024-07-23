@@ -17,6 +17,7 @@ class AbstractFilter {
 
     private int $page = 1;
     private int $limit = 20;
+    #[InternalField]
     private int $results = 0;
 
     final public function getPage(): ?int {
