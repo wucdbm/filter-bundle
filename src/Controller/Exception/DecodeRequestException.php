@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -13,6 +15,6 @@
 
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Controller\Exception;
 
-class DecodeRequestException extends \Exception {
-
+class DecodeRequestException extends \Exception
+{
 }

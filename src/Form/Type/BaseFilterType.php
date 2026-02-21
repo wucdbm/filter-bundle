@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -15,13 +17,15 @@ namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 
-abstract class BaseFilterType extends AbstractType {
-
-    public function getParent(): ?string {
+abstract class BaseFilterType extends AbstractType
+{
+    public function getParent(): ?string
+    {
         return BasicFilterType::class;
     }
 
-    public function getBlockPrefix(): string {
+    public function getBlockPrefix(): string
+    {
         return '';
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of the WucdbmFilterBundle package.
@@ -13,8 +13,8 @@
 
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Error;
 
-interface ErrorInterface {
-
+interface ErrorInterface
+{
     public function getMessage(): string;
 
     public function getPath(): ?string;

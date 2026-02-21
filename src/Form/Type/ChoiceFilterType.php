@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -17,15 +19,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ChoiceFilterType extends AbstractType {
-
-    public function configureOptions(OptionsResolver $resolver): void {
+class ChoiceFilterType extends AbstractType
+{
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults([
             'required' => false,
         ]);
     }
 
-    public function getParent(): ?string {
+    public function getParent(): ?string
+    {
         return ChoiceType::class;
     }
 }

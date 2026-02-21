@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -13,7 +15,6 @@
 
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Controller;
 
-use JsonException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,10 +26,10 @@ use Wucdbm\Bundle\WucdbmFilterBundle\Error\ErrorInterface;
 use Wucdbm\Bundle\WucdbmFilterBundle\Filter\AbstractFilter;
 use Wucdbm\Bundle\WucdbmFilterBundle\Helper\FormHelper;
 
-trait FilterControllerTrait {
-
+trait FilterControllerTrait
+{
     private function error(
-        string $message, string $code = null, int $statusCode = Response::HTTP_BAD_REQUEST
+        string $message, ?string $code = null, int $statusCode = Response::HTTP_BAD_REQUEST,
     ): JsonResponse {
         return $this->errorResponse(
             [$message], $code ?? 'ERROR_GENERAL', [], $statusCode
@@ -36,29 +37,32 @@ trait FilterControllerTrait {
     }
 
     private function unauthorized(
-        string $message = 'Unauthorized', array $customData = []
+        string $message = 'Unauthorized', array $customData = [],
     ): JsonResponse {
         return $this->errorResponse(
             [$message], 'ERROR_UNAUTHORIZED', $customData, Response::HTTP_UNAUTHORIZED
         );
     }
 
-    private function notFound(): JsonResponse {
+    private function notFound(): JsonResponse
+    {
         return $this->errorResponse(
             [], 'ERROR_NOT_FOUND', [], Response::HTTP_NOT_FOUND
         );
     }
 
-    private function formError(FormInterface $form): JsonResponse {
+    private function formError(FormInterface $form): JsonResponse
+    {
         return $this->errorResponse($form->getErrors(true, true), 'ERROR_VALIDATION');
     }
 
-    private function formErrorAtPath(string $error, string $path): JsonResponse {
+    private function formErrorAtPath(string $error, string $path): JsonResponse
+    {
         return $this->errorResponse([new Error($error, $path)], 'ERROR_VALIDATION');
     }
 
     private function errorResponse(
-        iterable $errors, string $code, array $customData = [], int $statusCode = Response::HTTP_BAD_REQUEST
+        iterable $errors, string $code, array $customData = [], int $statusCode = Response::HTTP_BAD_REQUEST,
     ): JsonResponse {
         $data = [];
 
@@ -110,7 +114,7 @@ trait FilterControllerTrait {
     }
 
     private function paginatedResponse(
-        array $data, AbstractFilter $filter, int $statusCode = Response::HTTP_OK, array $extra = []
+        array $data, AbstractFilter $filter, int $statusCode = Response::HTTP_OK, array $extra = [],
     ): JsonResponse {
         return $this->response([
             'data' => $data,
@@ -120,7 +124,8 @@ trait FilterControllerTrait {
         ], $statusCode);
     }
 
-    private function response(?array $data, int $statusCode = Response::HTTP_OK): JsonResponse {
+    private function response(?array $data, int $statusCode = Response::HTTP_OK): JsonResponse
+    {
         if (null === $data) {
             return new JsonResponse('null', 200, [], true);
         }
@@ -131,10 +136,11 @@ trait FilterControllerTrait {
     /**
      * @throws DecodeRequestException
      */
-    private function decode(Request $request): array {
+    private function decode(Request $request): array
+    {
         try {
             return json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
+        } catch (\JsonException $e) {
             throw new DecodeRequestException($e->getMessage());
         }
     }

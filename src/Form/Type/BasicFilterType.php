@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -16,9 +18,10 @@ namespace Wucdbm\Bundle\WucdbmFilterBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BasicFilterType extends AbstractType {
-
-    public function configureOptions(OptionsResolver $resolver): void {
+class BasicFilterType extends AbstractType
+{
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults([
             'method' => 'GET',
             'csrf_protection' => false,
@@ -26,7 +29,8 @@ class BasicFilterType extends AbstractType {
         ]);
     }
 
-    public function getBlockPrefix(): string {
+    public function getBlockPrefix(): string
+    {
         return '';
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -13,38 +15,45 @@
 
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Filter;
 
-class AbstractFilter {
-
+class AbstractFilter
+{
     private int $page = 1;
     private int $limit = 20;
     #[InternalField]
     private int $results = 0;
 
-    final public function getPage(): ?int {
+    final public function getPage(): ?int
+    {
         return $this->page;
     }
 
-    final public function setPage(?int $page): void {
+    final public function setPage(?int $page): void
+    {
         $this->page = $page ?? 1;
     }
 
-    final public function getLimit(): ?int {
+    final public function getLimit(): ?int
+    {
         return $this->limit;
     }
 
-    final public function setLimit(?int $limit): void {
+    final public function setLimit(?int $limit): void
+    {
         $this->limit = $limit ?? 20;
     }
 
-    final public function getResults(): int {
+    final public function getResults(): int
+    {
         return $this->results;
     }
 
-    final public function setResults(int $results): void {
+    final public function setResults(int $results): void
+    {
         $this->results = $results;
     }
 
-    final public function getOffset(): int {
+    final public function getOffset(): int
+    {
         $pages = $this->page - 1;
 
         if ($pages < 0) {
@@ -54,7 +63,8 @@ class AbstractFilter {
         return $pages * $this->limit;
     }
 
-    final public function getPages(): int {
+    final public function getPages(): int
+    {
         if (!$this->limit) {
             return 0;
         }

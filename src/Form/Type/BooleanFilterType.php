@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -18,14 +20,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wucdbm\Bundle\WucdbmFilterBundle\Form\DataTransformer\NullableBooleanToStringTransformer;
 
-class BooleanFilterType extends AbstractType {
-
-    public function buildForm(FormBuilderInterface $builder, array $options): void {
+class BooleanFilterType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
         $builder->setData($options['data'] ?? null);
         $builder->addViewTransformer(new NullableBooleanToStringTransformer($options['value'], $options['false_values']));
     }
 
-    public function configureOptions(OptionsResolver $resolver): void {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults([
             'value' => '1',
             'empty_data' => null,
@@ -36,7 +40,8 @@ class BooleanFilterType extends AbstractType {
         $resolver->setAllowedTypes('false_values', 'array');
     }
 
-    public function getBlockPrefix(): string {
+    public function getBlockPrefix(): string
+    {
         return 'boolean';
     }
 }

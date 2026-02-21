@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -17,15 +19,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateRangeFilterType extends AbstractType {
-
-    public function buildForm(FormBuilderInterface $builder, array $options): void {
+class DateRangeFilterType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
         $builder
             ->add($options['min_field_name'], DateFilterType::class)
             ->add($options['max_field_name'], DateFilterType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults([
             'inherit_data' => true,
         ]);

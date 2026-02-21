@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -22,12 +24,13 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  * Symfony\Component\Form\Extension\Core\DataTransformer\BooleanToStringTransformerNew
  * Except for allowing null as the model value.
  */
-class NullableBooleanToStringTransformer implements DataTransformerInterface {
-
+class NullableBooleanToStringTransformer implements DataTransformerInterface
+{
     private string $trueValue;
     private array $falseValues;
 
-    public function __construct(string $trueValue, array $falseValues = [null]) {
+    public function __construct(string $trueValue, array $falseValues = [null])
+    {
         $this->trueValue = $trueValue;
         $this->falseValues = $falseValues;
 
@@ -45,7 +48,8 @@ class NullableBooleanToStringTransformer implements DataTransformerInterface {
      *
      * @throws TransformationFailedException if the given value is not a Boolean
      */
-    public function transform($value): ?string {
+    public function transform($value): ?string
+    {
         if (null === $value) {
             return null;
         }
@@ -66,7 +70,8 @@ class NullableBooleanToStringTransformer implements DataTransformerInterface {
      *
      * @throws TransformationFailedException if the given value is not a string
      */
-    public function reverseTransform($value): ?bool {
+    public function reverseTransform($value): ?bool
+    {
         if (null === $value) {
             return null;
         }

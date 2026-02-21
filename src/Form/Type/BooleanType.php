@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -18,9 +20,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Wucdbm\Bundle\WucdbmFilterBundle\Form\DataTransformer\BooleanModelTransformer;
 
-class BooleanType extends AbstractType {
-
-    public function buildForm(FormBuilderInterface $builder, array $options): void {
+class BooleanType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
         $builder->addModelTransformer(new BooleanModelTransformer(
             $options['true_values'],
             $options['false_values'],
@@ -29,7 +32,8 @@ class BooleanType extends AbstractType {
         ));
     }
 
-    public function configureOptions(OptionsResolver $resolver): void {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults([
             'compound' => false,
             'true_values' => [1, '1', true, 'true', 'on'],

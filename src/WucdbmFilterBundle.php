@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -15,6 +17,6 @@ namespace Wucdbm\Bundle\WucdbmFilterBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class WucdbmFilterBundle extends Bundle {
-
+class WucdbmFilterBundle extends Bundle
+{
 }

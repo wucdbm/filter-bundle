@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -17,10 +19,10 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Wucdbm\Bundle\WucdbmFilterBundle\Filter\AbstractFilter;
 
-trait FilterRepositoryTrait {
-
+trait FilterRepositoryTrait
+{
     public function filterEntities(
-        QueryBuilder $builder, AbstractFilter $filter
+        QueryBuilder $builder, AbstractFilter $filter,
     ): array {
         if ($filter->getLimit()) {
             $builder->setMaxResults($filter->getLimit());

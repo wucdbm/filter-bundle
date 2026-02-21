@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the WucdbmFilterBundle package.
  *
@@ -16,11 +18,12 @@ namespace Wucdbm\Bundle\WucdbmFilterBundle\Helper;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Validator\ConstraintViolation;
 
-class FormHelper {
-
+class FormHelper
+{
     private const REGEX = '/^(data\.)|(\\])|(\\[)|children|\.data$/';
 
-    public static function formErrorPath(FormError $error): string {
+    public static function formErrorPath(FormError $error): string
+    {
         $cause = $error->getCause();
 
         if ($cause instanceof ConstraintViolation) {
