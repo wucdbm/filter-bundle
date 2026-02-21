@@ -69,6 +69,6 @@ class AbstractFilter
             return 0;
         }
 
-        return ceil($this->results / $this->limit);
+        return (int)ceil($this->results / $this->limit);
     }
 }
