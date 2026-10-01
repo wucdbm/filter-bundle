@@ -17,6 +17,7 @@ namespace Wucdbm\Bundle\WucdbmFilterBundle\Repository;
 
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\OffsetPaginator;
+use Doctrine\ORM\Tools\Pagination\Window;
 use Wucdbm\Bundle\WucdbmFilterBundle\Filter\AbstractFilter;
 
 trait FilterRepositoryTrait
@@ -24,16 +25,16 @@ trait FilterRepositoryTrait
     public function filterEntities(
         QueryBuilder $builder, AbstractFilter $filter,
     ): array {
-        if ($filter->getLimit()) {
-            $builder->setMaxResults($filter->getLimit());
-        }
-
-        $builder->setFirstResult($filter->getOffset());
-
         $query = $builder->getQuery();
         $paginator = new OffsetPaginator(true);
-        $page = $paginator->paginate($query);
-        $filter->setResults($page->count());
+        $page = $paginator->paginate(
+            $query,
+            new Window(
+                $filter->getOffset(),
+                $filter->getLimit(),
+            )
+        );
+        $filter->setResults($page->getTotalCount());
 
         return $page->getIterator()->getArrayCopy();
     }

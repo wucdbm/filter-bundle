@@ -22,24 +22,24 @@ class AbstractFilter
     #[InternalField]
     private int $results = 0;
 
-    final public function getPage(): ?int
+    final public function getPage(): int
     {
         return $this->page;
     }
 
-    final public function setPage(?int $page): void
+    final public function setPage(int $page): void
     {
-        $this->page = $page ?? 1;
+        $this->page = $page;
     }
 
-    final public function getLimit(): ?int
+    final public function getLimit(): int
     {
         return $this->limit;
     }
 
-    final public function setLimit(?int $limit): void
+    final public function setLimit(int $limit): void
     {
-        $this->limit = $limit ?? 20;
+        $this->limit = $limit;
     }
 
     final public function getResults(): int
