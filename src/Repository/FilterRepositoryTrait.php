@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace Wucdbm\Bundle\WucdbmFilterBundle\Repository;
 
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\ORM\Tools\Pagination\OffsetPaginator;
 use Wucdbm\Bundle\WucdbmFilterBundle\Filter\AbstractFilter;
 
 trait FilterRepositoryTrait
@@ -31,9 +31,10 @@ trait FilterRepositoryTrait
         $builder->setFirstResult($filter->getOffset());
 
         $query = $builder->getQuery();
-        $paginator = new Paginator($query, true);
-        $filter->setResults(count($paginator));
+        $paginator = new OffsetPaginator(true);
+        $page = $paginator->paginate($query);
+        $filter->setResults($page->count());
 
-        return $paginator->getIterator()->getArrayCopy();
+        return $page->getIterator()->getArrayCopy();
     }
 }

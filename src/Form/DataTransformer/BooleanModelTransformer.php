@@ -37,7 +37,7 @@ class BooleanModelTransformer implements DataTransformerInterface
         $this->required = $required;
     }
 
-    public function transform($value)
+    public function transform($value): ?bool
     {
         if (null === $value) {
             return null;
@@ -50,7 +50,7 @@ class BooleanModelTransformer implements DataTransformerInterface
         return $value;
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?bool
     {
         if (!$this->required && in_array($value, $this->nullValues, true)) {
             return null;
